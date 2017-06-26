@@ -1,0 +1,21 @@
+import healpy as hp
+import math
+
+input='13478.toa_phoa_snr.fits'                        % The string is the name of the fits file
+
+a=hp.read_map(input)
+file_object=open('posterior_13478','w')                % The string is the name of the txt file containing the information from the fits file 
+
+
+for i in range(len(a)):                               % The number is the number of healpix points in the fits file, please refer to the readme.txt
+	file_object.write(str(i+1))
+	file_object.write('\t')
+	b=hp.pix2ang(int(math.sqrt(len(a)/12)),i,nest=False)
+	file_object.write(str(b[0]))
+	file_object.write('\t')
+	file_object.write(str(b[1]))
+	file_object.write('\t')
+	file_object.write(str(a[i]))
+	file_object.write('\n')
+
+file_object.close()
