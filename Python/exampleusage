@@ -1,24 +1,24 @@
 #Example Usage for the python version of the code.
-For the example, please the sky map provided in the link below:
+For this example, please use the sky map provided in the link below:
 
 https://mega.nz/#!sApAQKzS!0jkyxPeA5LGL_TMDZrkNSk21OKi2aG0-kXRiKMAhWDk
 
 It is converted from a fits file taken from the first two year study. 
 
-# this first line will return the values of the integral at different observation time, assuming a telescope 
-#can achieve limiting magnitude 22.5 in 10 secodns with a raidus of the aperture equal to 5 meters.
+#The first line below will return the values of the integral at different observation times, assuming that a telescope 
+#can achieve a limiting magnitude 22.5 in 10 secodns with a raidus of the aperture equal to 5 meters.
 
 tau, prob = Pem(5, 22.5, 10, [], [], [], [], [], [])
 
 # the second line will find the tiles in the sky using a greedy algorithm. 
 # This line will find 50 tiles assuming the field of view of the telescope is 3 square meters.
-# The resolution of the fits file is 8, and we want 90% credible region.
+# The resolution of the fits file is 8, and 90% credible region is assumed.
 
 location, check, Prob_in_field = Greedy(3, 50, 'posterior_11366_2.txt', 8, 0.9)
 
 # this third line will return an estimate of the total probability and the time allocation to each of the fields.
 # This assumes the slew time of the telescope is 1 second and zero second for the readout using equal observation time
 # If the use of Lagrange multiplier is intended to compute the individual exposure time, replace 'Eq' with 'LM'.
-# But the dictionary 'options' in solver may need to be modified to ensure a reliable results.
+# But the dictionary 'options' in the function Solver may need to be modified to ensure a reliable results.
 
 tprob, time_allocation = Main(1800, 1, 0, Prob_in_field, tau, prob, 'Eq')
